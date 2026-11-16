@@ -111,7 +111,7 @@ docker compose up --build -d        # ricompila dopo una modifica al codice
 - **Ho cambiato `DB_PASSWORD` o `DB_NAME` e il backend non si collega**: PostgreSQL applica queste variabili solo alla creazione del volume. Esegui `docker compose down -v` e riavvia (cancella i dati).
 - **Ho acceso `DEMO_DATA` dopo il primo avvio**: modifica `.env` e rilancia `docker compose up -d`, il backend viene ricreato ed esegue il popolamento.
 - **Swagger UI non raggiungibile**: nel compose la porta 8080 del backend non è pubblicata. Per usarla avvia il backend in locale (vedi il README di `med-app-be`) oppure aggiungi temporaneamente `ports: ["8080:8080"]` al servizio `backend`.
-- **Ispezionare il database con un client (ad esempio DBeaver)**: aggiungi temporaneamente `ports: ["5433:5432"]` al servizio `db`.
+- **Ispezionare il database con un client (ad esempio pgAdmin 4)**: aggiungi temporaneamente `ports: ["5433:5432"]` al servizio `db`.
 
 ## Note
 
@@ -119,4 +119,18 @@ Questa configurazione serve per provare e dimostrare l'applicazione in locale: *
 
 ## Documentazione
 
-La cartella `diagrams/` contiene i diagrammi di progetto: architettura dei container, classi del dominio e dei servizi, sequenze di prenotazione e di referto e fatturazione (file `.drawio` e immagini `.png`).
+La cartella `diagrams/` contiene i diagrammi di progetto. Ogni diagramma è presente in due file con lo stesso nome: il sorgente `.drawio`, modificabile con [draw.io](https://app.diagrams.net), e l'immagine `.png`.
+
+| File | Diagramma | Contenuto |
+|---|---|---|
+| `casi-d-uso` | Casi d'uso (UML) | I quattro attori (paziente, medico, amministratore, delegato) e le funzionalità principali |
+| `er` | Entità-relazione (schema concettuale) | Le 15 entità del dominio, le relazioni e le cardinalità (min,max) |
+| `classi-dominio` | Classi (UML) | Le entità del backend con attributi e associazioni |
+| `classi-servizi` | Classi (UML) | I servizi del backend e le loro dipendenze |
+| `stati-appuntamento` | Macchina a stati (UML) | Ciclo di vita dell'appuntamento: prenotato, completato, fatturato, refertato, annullato |
+| `stati-delega-medici` | Macchina a stati (UML) | Ciclo di vita della delega tra medici |
+| `seq-prenotazione` | Sequenza (UML) | Prenotazione di una visita, con i casi di errore |
+| `seq-referto-fatturazione` | Sequenza (UML) | Registrazione del pagamento, emissione della fattura e scrittura del referto |
+| `architettura-container` | Architettura | I tre container (frontend, backend, database) e i volumi |
+
+I diagrammi dei casi d'uso, ER e di sequenza della prenotazione sono quelli riportati nell'elaborato del Project Work. La documentazione delle API non è in questo repository: è generata dal codice del backend ed è consultabile dalla Swagger UI (vedi il README di `med-app-be`).
